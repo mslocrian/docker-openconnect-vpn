@@ -14,6 +14,15 @@ else
     ( echo yes; echo $OPENCONNECT_PASSWORD ) | $OPENCONNECT_COMMAND $OPENCONNECT_ADDITIONAL_ARGUMENTS -b && iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
 fi
 
+# Going to hold off for a bit and then check the status of openconnect
 while [ true ]; do
-    sleep 600
+    sleep 60
+    pidof openconnect > /dev/null
+    if [ $? -ne 0 ]; then
+        echo "OpenConnect has quit. Exiting..."
+        iptables -t nat -D POSTROUTING -o tun0 -j MASQUERADE
+        exit 1
+    else
+        echo "OpenConnect still running. Continuing..."
+    fi
 done
