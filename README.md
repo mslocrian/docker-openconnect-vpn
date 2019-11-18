@@ -4,7 +4,7 @@ docker container.
 
 I've experienced issues with AnyConnect and its desire to take over the
 system routing table, and bugs where its failure can cause other host 
-based networking issue.
+based networking issues.
 
 To work around this, I wanted to get the VPN isolated into its own docker
 container, where it can do what it likes within the container context, but
@@ -25,15 +25,16 @@ https://github.com/jetbrains-infra/docker-anyconnect-vpn
 
 # Usage
 ## Environment Variables
-Set up some environment variables
-`OPENCONNECT_SERVER` - The Cisco AnyConnect VPN server to connect to
-`OPENCONNECT_USER` - Your username
-`OPENCONNECT_PASSWORD` - Your password / OTP
-`OPENCONNECT_SERVER_CERT_HASH` - The certificate hash (if you omit this, you 
-will see output from the openconnect client in the docker output).
-`OPENCONNECT_GROUP` - The AnyConnect VPN Group associated with your account 
-(if any)
-`OPENCONNECT_ADDITIONAL_ARGUMENTS` - If you feel like passing any additional arguments to the openconnect CLI. (-vvv, --dump-http-traffic, or ???)
+Set up some environment variables:
+- `OPENCONNECT_SERVER` - The Cisco AnyConnect VPN server to connect to
+- `OPENCONNECT_USER` - Your username
+- `OPENCONNECT_PASSWORD` - Your password / OTP
+- `OPENCONNECT_SERVER_CERT_HASH` - The certificate hash (if you omit this, you
+  will see output from the openconnect client in the docker output).
+- `OPENCONNECT_GROUP` - The AnyConnect VPN Group associated with your account
+  (if any)
+- `OPENCONNECT_ADDITIONAL_ARGUMENTS` - If you feel like passing any additional
+  arguments to the openconnect CLI. (`-vvv`, `--dump-http-traffic`, etc.)
 
 ## CLI
 ```sh
