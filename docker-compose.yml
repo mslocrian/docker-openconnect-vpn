@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  vpn:
+    container_name: vpn
+    image: mslocrian/docker-openconnect-vpn:latest
+    environment:
+      - OPENCONNECT_SERVER=${OPENCONNECT_SERVER}
+      - OPENCONNECT_SERVER_CERT_HASH=${OPENCONNECT_SERVER_CERT_HASH}
+      - OPENCONNECT_USER=${OPENCONNECT_USER}
+      - OPENCONNECT_PASSWORD=${OPENCONNECT_PASSWORD}
+      - OPENCONNECT_GROUP=${OPENCONNECT_GROUP}
+      - OPENCONNECT_ADDITIONAL_ARGUMENTS=${OPENCONNECT_ADDITIONAL_ARGUMENTS}
+    networks:
+      vpn_network:
+        ipv4_address: 172.32.0.200
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+    restart: unless-stopped
+    security_opt:
+      - label:disable
+
+networks:
+  vpn_network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.32.0.0/24
