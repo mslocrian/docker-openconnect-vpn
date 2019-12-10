@@ -17,7 +17,7 @@ services:
     privileged: true
     cap_add:
       - NET_ADMIN
-    restart: unless-stopped
+    restart: "no"
     security_opt:
       - label:disable
 
