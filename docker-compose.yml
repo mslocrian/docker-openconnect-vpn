@@ -3,14 +3,13 @@ version: '3'
 services:
   vpn:
     container_name: vpn
-    image: mslocrian/docker-openconnect-vpn:latest
+    image: docker-openconnect-vpn:1.0.1
     environment:
-      - OPENCONNECT_SERVER=${OPENCONNECT_SERVER}
-      - OPENCONNECT_SERVER_CERT_HASH=${OPENCONNECT_SERVER_CERT_HASH}
-      - OPENCONNECT_USER=${OPENCONNECT_USER}
-      - OPENCONNECT_PASSWORD=${OPENCONNECT_PASSWORD}
-      - OPENCONNECT_GROUP=${OPENCONNECT_GROUP}
-      - OPENCONNECT_ADDITIONAL_ARGUMENTS=${OPENCONNECT_ADDITIONAL_ARGUMENTS}
+      - VPN_COOKIE=${COOKIE}
+      - VPN_USER=${VPN_USER}
+      - VPN_OS=${VPN_OS}
+      - VPN_ENDPOINT=${VPN_ENDPOINT}
+      - ADDITIONAL_COMMANDS=${ADDITIONAL_COMMANDS}
     networks:
       vpn_network:
         ipv4_address: 172.32.0.200

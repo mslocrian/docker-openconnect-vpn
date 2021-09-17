@@ -1,9 +1,9 @@
 export DOCKERHUB_USER=mslocrian
 export DOCKERHUB_REPO=docker-openconnect-vpn
-export DOCKERHUB_VERSION=1.0.0
+export DOCKERHUB_VERSION=1.0.1
 
 build:
-	@docker build -f Dockerfile -t $(DOCKERHUB_REPO):$(DOCKERHUB_VERSION) .
+	@docker build -f Dockerfile --no-cache -t $(DOCKERHUB_REPO):$(DOCKERHUB_VERSION) .
 
 push: DOCKER_IMAGE_ID = $(shell docker images -q $(DOCKERHUB_REPO):$(DOCKERHUB_VERSION))
 push:

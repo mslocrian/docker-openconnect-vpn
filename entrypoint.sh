@@ -1,18 +1,21 @@
 #!/bin/bash
 
-OPENCONNECT_COMMAND="openconnect $OPENCONNECT_SERVER --user=$OPENCONNECT_USER --passwd-on-stdin"
-
-if [ x${OPENCONNECT_GROUP} != "x" ]; then
-    OPENCONNECT_COMMAND+=" -g $OPENCONNECT_GROUP"
+echo $VPN_COOKIE | openconnect --protocol=gp -b -u $VPN_USER --os=$VPN_OS --passwd-on-stdin --csd-wrapper=/hipreport.sh $VPN_ENDPOINT
+res=$?
+if [ $res -ne 0 ]; then
+    echo "OpenConnect could not successfully start. exiting..."
+	exit $res
 fi
 
-if [ x${OPENCONNECT_SERVER_CERT_HASH} != "x" ]; then
-    echo "running echo $OPENCONNECT_COMMAND --servercert $OPENCONNECT_SERVER_CERT_HASH $OPENCONNECT_ADDITIONAL_ARGUMENTS"
-    echo $OPENCONNECT_PASSWORD | $OPENCONNECT_COMMAND --servercert $OPENCONNECT_SERVER_CERT_HASH $OPENCONNECT_ADDITIONAL_ARGUMENTS -b && iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
-else
-    echo running $OPENCONNECT_COMMAND $OPENCONNECT_ADDITIONAL_ARGUMENTS
-    ( echo yes; echo $OPENCONNECT_PASSWORD ) | $OPENCONNECT_COMMAND $OPENCONNECT_ADDITIONAL_ARGUMENTS -b && iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
-fi
+SLEEP_TIME=10
+echo "Sleeping for $SLEEP_TIME seconds so VPN can sort itself out."
+sleep $SLEEP_TIME 
+
+echo "Executing iptables nat rules."
+iptables -t nat -A POSTROUTING -o tun0 -j MASQUERADE
+
+echo "Executing additional commands."
+$ADDITIONAL_COMMANDS
 
 # Going to hold off for a bit and then check the status of openconnect
 while [ true ]; do

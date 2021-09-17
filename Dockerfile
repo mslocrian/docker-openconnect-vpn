@@ -1,10 +1,11 @@
-FROM ubuntu:19.04
+FROM ubuntu:20.04
 LABEL maintainer="Stegen Smith <stegen@owns.com>"
 
-RUN apt-get update && apt-get -y install iputils-ping iptables net-tools \
+RUN apt-get update && apt-get -y install bash iputils-ping iptables net-tools \
     openconnect tcpdump
 
 ADD entrypoint.sh /entrypoint.sh
+ADD hipreport.sh /hipreport.sh
 
 HEALTHCHECK  --interval=10s --timeout=10s --start-period=10s \
   CMD /sbin/ifconfig tun0
