@@ -1,4 +1,4 @@
-# Docker AnyConnect VPN
+# Docker PaloAlto GlobalConnect SAML VPN
 The goal here is to be able to provide PaloAlto GlobalConnect SAML Based
 VPN connectivity via a docker container. 
 
