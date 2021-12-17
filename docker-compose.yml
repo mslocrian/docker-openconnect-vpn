@@ -4,18 +4,27 @@ services:
   vpn:
     container_name: vpn
     image: docker-openconnect-vpn:1.0.1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/.Xauthority
+      - $PWD:/hostroot
     environment:
-      - VPN_COOKIE=${COOKIE}
-      - VPN_USER=${VPN_USER}
-      - VPN_OS=${VPN_OS}
+      - OUTSIDE_HOST=ruma.owns.com
+      - DOCKER_BRIDGE_ADDRESS=172.32.0.1
+      - HEALTHCHECK_HOST=10.14.224.81
       - VPN_ENDPOINT=${VPN_ENDPOINT}
+      - ADDITIONAL_VPN_ARGS=${ADDITIONAL_VPN_ARGS}
       - ADDITIONAL_COMMANDS=${ADDITIONAL_COMMANDS}
+      - DISPLAY=${DISPLAY}
+      - XAUTH=/.Xauthority
+      - XAUTHORITY=/.Xauthority
     networks:
       vpn_network:
         ipv4_address: 172.32.0.200
     privileged: true
     cap_add:
       - NET_ADMIN
+      - SYS_PTRACE
     restart: "no"
     security_opt:
       - label:disable

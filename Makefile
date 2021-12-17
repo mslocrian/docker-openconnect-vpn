@@ -11,3 +11,6 @@ push:
 	docker push $(DOCKERHUB_USER)/$(DOCKERHUB_REPO):latest
 	docker tag $(DOCKER_IMAGE_ID) $(DOCKERHUB_USER)/$(DOCKERHUB_REPO):$(DOCKERHUB_VERSION)
 	docker push $(DOCKERHUB_USER)/$(DOCKERHUB_REPO):$(DOCKERHUB_VERSION)
+
+start:
+	bash -c "source openconnect.env && docker-compose up vpn"

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo $VPN_COOKIE | openconnect --protocol=gp -b -u $VPN_USER --os=$VPN_OS --passwd-on-stdin --csd-wrapper=/hipreport.sh $VPN_ENDPOINT
+echo $COOKIE | openconnect --protocol=gp -b -u $USER $ADDITIONAL_VPN_ARGS --os=$OS --passwd-on-stdin --csd-wrapper=/vpn/hipreport.sh $HOST
 res=$?
 if [ $res -ne 0 ]; then
     echo "OpenConnect could not successfully start. exiting..."
