@@ -3,20 +3,28 @@ version: '3'
 services:
   vpn:
     container_name: vpn
-    image: mslocrian/docker-openconnect-vpn:latest
+    image: docker-openconnect-vpn:1.0.1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/.Xauthority
+      - $PWD:/hostroot
     environment:
-      - OPENCONNECT_SERVER=${OPENCONNECT_SERVER}
-      - OPENCONNECT_SERVER_CERT_HASH=${OPENCONNECT_SERVER_CERT_HASH}
-      - OPENCONNECT_USER=${OPENCONNECT_USER}
-      - OPENCONNECT_PASSWORD=${OPENCONNECT_PASSWORD}
-      - OPENCONNECT_GROUP=${OPENCONNECT_GROUP}
-      - OPENCONNECT_ADDITIONAL_ARGUMENTS=${OPENCONNECT_ADDITIONAL_ARGUMENTS}
+      - OUTSIDE_HOSTNAME=${OUTSIDE_HOSTNAME}
+      - DOCKER_BRIDGE_ADDRESS=${DOCKER_BRIDGE_ADDRESS}
+      - HEALTHCHECK_HOST=${HEALTHCHECK_HOST}
+      - VPN_ENDPOINT=${VPN_ENDPOINT}
+      - ADDITIONAL_VPN_ARGS=${ADDITIONAL_VPN_ARGS}
+      - ADDITIONAL_COMMANDS=${ADDITIONAL_COMMANDS}
+      - DISPLAY=${DISPLAY}
+      - XAUTH=/.Xauthority
+      - XAUTHORITY=/.Xauthority
     networks:
       vpn_network:
         ipv4_address: 172.32.0.200
     privileged: true
     cap_add:
       - NET_ADMIN
+      - SYS_PTRACE
     restart: "no"
     security_opt:
       - label:disable
