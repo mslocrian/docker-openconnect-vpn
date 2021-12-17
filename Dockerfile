@@ -24,7 +24,4 @@ ADD scripts/gp_saml_gui.py /usr/local/lib/python3.9/dist-packages/gp_saml_gui.py
 HEALTHCHECK  --interval=10s --timeout=10s --start-period=10s \
   CMD ping -c 3 $HEALTHCHECK_HOST
 
-# MUST FIX UP /etc/hosts
-
-# CMD ["/vpn/entrypoint.sh"]
 CMD ["/vpn/run.sh"]
