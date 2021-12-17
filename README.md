@@ -26,6 +26,9 @@ Set up some environment variables:
 - `VPN_ENDPOINT` - The PaloAlto GlobalConnect VPN Host
 - `ADDITIONAL_VPN_ARGS` - If you feel like passing any additional arguments to openconnect CLI
 - `ADDITIONAL_COMMANDS` - Run some additional commands after VPN comes up
+- `OUTSIDE_HOSTNAME` - Need to pass the hostname of the docker host inside in for X11 (Updates /etc/hosts entry)
+- `DOCKER_BRIDGE_ADDRESS` - The address of the docker bridge host. Typically first address of network defined in docker-compose.yaml
+- `HEALTHCHECK_HOST` - Host inside the VPN to check health against. 
 
 ## CLI
 ```sh

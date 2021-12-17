@@ -13,7 +13,7 @@ if [ ! -f /tmp/vpn_env ]; then
     exit 1
 fi
 
-echo "$DOCKER_BRIDGE_ADDRESS $OUTSIDE_HOST" >> /etc/hosts
+echo "$DOCKER_BRIDGE_ADDRESS $OUTSIDE_HOSTNAME" >> /etc/hosts
 
 source /tmp/vpn_env
 /vpn/openconnect.sh
